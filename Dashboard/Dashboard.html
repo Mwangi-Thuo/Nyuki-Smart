@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bee Management System</title>
+    <link rel="stylesheet" href="Dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <button id="toggleButton" class="toggleButton">☰</button>
+            <ul>
+                <li><a href="#dashboard" onclick="showPage('dashboard')"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="#hives" onclick="showPage('hives')"><i class="fas fa-user-circle"></i> Hives</a></li>
+                <li><a href="#subscription" onclick="showPage('subscription')"><i class="fas fa-credit-card"></i> Subscription</a></li>
+                <li><a href="#profile" onclick="showPage('profile')"><i class="fas fa-user"></i> Profile</a></li>
+                <li><a href="#logout" onclick="showPage('logout')"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul> 
+        </div>
+        <div class="content">
+            <div id="dashboard" class="page active">
+                <header>
+                    <h1>Dashboard</h1>
+                </header>
+                <div class="image-container">
+                    <img src="Smart Nyuki.jpeg" alt="Company Logo" class="responsive-image">
+                </div>
+                    <div class="overview">
+                        <div class="summary">
+                            <div>
+                                <h3>Active beehives</h3>
+                                <p>12 HIVES</p>
+                            </div>
+                            <div>
+                                <h3>Honey harvested</h3>
+                                <p>55 kgs</p>
+                            </div>
+                        </div>
+                        <div class="chart">
+                            <canvas id="overviewChart"></canvas>
+                        </div>
+                    </div>
+                
+                    <div class="chart-container">
+                        <canvas id="temperatureChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="humidityChart"></canvas>
+                    </div>
+            </div>
+            <div id="hives" class="page">
+                <h1>Hives</h1>
+                <div class="hive-info">
+                    <div class="hive">
+                      <h2>Hive 1</h2>
+                      <table>
+                        <thead>
+                            <tr>
+                                <th>Temperature</th>
+                                <th>Humidity</th>
+                                <th>Sound</th>
+                                <th>Weight</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>35°C</td>
+                                <td>55%</td>
+                                <td>Normal</td>
+                                <td>50kg</td>
+                            </tr>
+                        </tbody>
+                      </table>
+                      <h2>Hive 2</h2>
+                      <table>
+                        <thead>
+                            <tr>
+                                <th>Temperature</th>
+                                <th>Humidity</th>
+                                <th>Sound</th>
+                                <th>Weight</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>35°C</td>
+                                <td>55%</td>
+                                <td>Normal</td>
+                                <td>50kg</td>
+                            </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                </div>
+                <button onclick="addNewHive()">Add New Hive</button>
+                    <form id="hiveForm" style="display: none;" onsubmit="addNewHive(event)">
+                        <h3>New Hive Details</h3>
+                        <label for="newTemp">Temperature:</label>
+                        <input type="text" id="newTemp" required><br>
+                        <label for="newHumidity">Humidity:</label>
+                        <input type="text" id="newHumidity" required><br>
+                        <label for="newSound">Sound:</label>
+                        <input type="text" id="newSound" required><br>
+                        <label for="newWeight">Weight:</label>
+                        <input type="text" id="newWeight" required><br>
+                        <button type="submit">Add Hive</button>
+                    </form>
+            </div>
+            <div id="subscription" class="page"> 
+                <div class="subscription">
+                    <h1>Subscription Plan</h1>
+                    <div class="plan">
+                        <h2>Premium Plan</h2>
+                        <p>Access to all features and premium support</p>
+                        <p><strong>Ksh 1000/month</strong></p>
+                    </div>
+                    <div class="payment-methods">
+                        <h2>Payment Methods</h2>
+                        <form>
+                            <div class="payment-option">
+                                <input type="radio" id="credit-card" name="payment-method" value="credit-card" checked>
+                                <label for="credit-card">Mpesa</label>
+                            </div>
+                            <div class="payment-option">
+                                <input type="radio" id="paypal" name="payment-method" value="paypal">
+                                <label for="paypal">Airtel Money</label>
+                            </div>
+                            <button type="button" class="pay-btn">Pay Now</button>
+                        </form>
+                    </div>
+                    <div class="transactions">
+                        <h2>Transactions</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Description</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2024-05-01</td>
+                                    <td>Monthly Subscription</td>
+                                    <td>Ksh 1000</td>
+                                </tr>
+                                <tr>
+                                    <td>2024-04-01</td>
+                                    <td>Monthly Subscription</td>
+                                    <td>Ksh 1000</td>
+                                </tr>
+                                <tr>
+                                    <td>2024-03-01</td>
+                                    <td>Monthly Subscription</td>
+                                    <td>Ksh 1000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div id="profile" class="page">
+                <div class="profile">
+                    <div class="profile-header">
+                        <div class="profile-photo">
+                            <img src="account.png" alt="Profile Photo" class="responsive-image">
+                        </div>
+                        <div class="profile-info">
+                            <h1>John Doe</h1>
+                            <button class="edit-btn">Edit Profile</button>
+                        </div>
+                    </div>
+                    <div class="profile-details">
+                        <h2>User Details</h2>
+                        <ul>
+                            <li><strong>Email:</strong> johndoe@example.com</li>
+                            <li><strong>Phone:</strong> +254700000000</li>
+                            <li><strong>Address:</strong> Gatundu-Juja, Juja, Kiambu</li>
+                        </ul>
+                    </div>
+                    <div class="profile-notifications">
+                        <h2>Notifications</h2>
+                        <ul>
+                            <li>You have a new message.</li>
+                            <li>Your subscription will expire in 10 days.</li>
+                            <li>A new hive has been added to your account.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div id="logout" class="page">
+                <h1>Logout</h1>
+                <p>Dear user, you have been logged out.</p>
+                <button onclick="window.location.href='SignIn.html';">Log In</button>
+            </div>
+            <div class="footer">
+                &copy; 2024 Smart Nyuki. All Rights Reserved. <a href="https://www.smartabee.netlify.app.com">Privacy Policy</a>
+            </div>
+        </div>
+    </div>
+    <script src="Dashboard.js"></script>
+</body>
+</html>
