@@ -8,20 +8,51 @@ function showPage(pageId) {
         }
     });
 }
+document.addEventListener('DOMContentLoaded', () => {
+    // Sidebar Menu Toggle
+    const menuToggle = document.getElementById('menu-toggle');
+    const sidebar = document.querySelector('.sidebar');
+    menuToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('active');
+    });
 
-document.getElementById('toggleButton').onclick = function () {
-    const sidebar = document.getElementById('sidebar');
-    const mainContent = document.getElementById('mainContent');
-    
-    if (sidebar.classList.contains('collapsed')) {
-        sidebar.classList.remove('collapsed');
-        mainContent.style.marginLeft = '250px';
-    } else {
-        sidebar.classList.add('collapsed');
-        mainContent.style.marginLeft = '0';
+    // Form Validation
+    const forms = document.querySelectorAll('form');
+    forms.forEach(form => {
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const name = form.querySelector('input[name="name"]').value.trim();
+            const email = form.querySelector('input[name="email"]').value.trim();
+            const password = form.querySelector('input[name="password"]').value.trim();
+
+            if (!name || !email || !password) {
+                alert('All fields are required!');
+                return;
+            }
+
+            if (!validateEmail(email)) {
+                alert('Please enter a valid email address!');
+                return;
+            }
+
+            form.submit();
+        });
+    });
+
+    // Notification Dismissal
+    const notifications = document.querySelectorAll('.notifications ul li');
+    notifications.forEach(notification => {
+        notification.addEventListener('click', () => {
+            notification.style.display = 'none';
+        });
+    });
+
+    // Email Validation Function
+    function validateEmail(email) {
+        const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        return re.test(email);
     }
-};
-
+});
 document.addEventListener('DOMContentLoaded', () => {
     showPage('dashboard');
 
@@ -64,21 +95,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
-function showPage(pageId) {
-    // Hide all pages
-    var pages = document.querySelectorAll('.page');
-    pages.forEach(function(page) {
-        page.classList.remove('active');
-    });
-    // Show the selected page
-    var selectedPage = document.getElementById(pageId);
-    selectedPage.classList.add('active');
-}
-
-function showHiveForm() {
-    document.getElementById('hiveForm').style.display = 'block';
-}
-
 function addNewHive(event) {
     event.preventDefault();
     const temp = document.getElementById('newTemp').value;
@@ -99,9 +115,4 @@ function addNewHive(event) {
 
     document.getElementById('hiveForm').reset();
     document.getElementById('hiveForm').style.display = 'none';
-}
-
-function login() {
-    alert("Redirecting to login page...");
-    // Implement your login redirection here
 }
