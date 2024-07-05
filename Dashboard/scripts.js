@@ -55,64 +55,62 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 document.addEventListener('DOMContentLoaded', () => {
     showPage('dashboard');
-
-    const temperatureCtx = document.getElementById('temperatureChart').getContext('2d');
-    const humidityCtx = document.getElementById('humidityChart').getContext('2d');
-
-    const temperatureChart = new Chart(temperatureCtx, {
-        type: 'line',
-        data: {
-            labels: ['Monday', 'Tuesday', 'Wednesday', 'Thurday', 'Friday', 'Saturday', 'Sunday'],
-            datasets: [{
-                label: 'Temperature',
-                data: [32, 30, 35, 32, 31, 30, 35],
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgba(255, 99, 132, 1)',
-                borderWidth: 1
-            }]
+// Sample data for humidity and temperature
+const data = {
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    datasets: [
+        {
+            label: 'Humidity (%)',
+            data: [55, 50, 60, 65, 70, 75, 80, 85, 75, 70, 65, 60],
+            borderColor: 'rgba(54, 162, 235, 1)',
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            yAxisID: 'y-axis-1',
         },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false
+        {
+            label: 'Temperature (°C)',
+            data: [10, 12, 14, 16, 18, 20, 22, 24, 22, 20, 18, 16],
+            borderColor: 'rgba(255, 99, 132, 1)',
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            yAxisID: 'y-axis-2',
         }
-    });
+    ]
+};
 
-    const humidityChart = new Chart(humidityCtx, {
-        type: 'line',
-        data: {
-            labels: ['Monday', 'Tuesday', 'Wednesday', 'Thurday', 'Friday', 'Saturday', 'Sunday'],
-            datasets: [{
-                label: 'Humidity',
-                data: [20, 25, 30, 35, 40,],
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false
+// Configuration options
+const config = {
+    type: 'line',
+    data: data,
+    options: {
+        responsive: true,
+        scales: {
+            yAxes: [
+                {
+                    id: 'y-axis-1',
+                    position: 'left',
+                    ticks: {
+                        beginAtZero: true,
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Humidity (%)'
+                    }
+                },
+                {
+                    id: 'y-axis-2',
+                    position: 'right',
+                    ticks: {
+                        beginAtZero: true,
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Temperature (°C)'
+                    }
+                }
+            ]
         }
-    });
-});
-function addNewHive(event) {
-    event.preventDefault();
-    const temp = document.getElementById('newTemp').value;
-    const humidity = document.getElementById('newHumidity').value;
-    const sound = document.getElementById('newSound').value;
-    const weight = document.getElementById('newWeight').value;
+    }
+};
 
-    const hiveInfo = document.createElement('div');
-    hiveInfo.classList.add('hive-info');
-    hiveInfo.innerHTML = `
-        <h3>New Hive</h3>
-        <p>Temperature: <span>${temp}°C</span></p>
-        <p>Humidity: <span>${humidity}%</span></p>
-        <p>Sound: <span>${sound}</span></p>
-        <p>Weight: <span>${weight}kg</span></p>
-    `;
-    document.getElementById('hives').appendChild(hiveInfo);
-
-    document.getElementById('hiveForm').reset();
-    document.getElementById('hiveForm').style.display = 'none';
-}
+// Render the chart
+const ctx = document.getElementById('humidityTemperatureChart').getContext('2d');
+const humidityTemperatureChart = new Chart(ctx, config);
